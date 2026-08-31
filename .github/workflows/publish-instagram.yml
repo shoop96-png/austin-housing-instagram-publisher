@@ -54,11 +54,17 @@ jobs:
               print(f"Media already present: {target}")
               raise SystemExit(0)
 
-          staged = pathlib.Path("media-staging") / f"{filename}.b64"
-          if not staged.exists():
-              raise SystemExit(f"Missing staged media payload: {staged}")
+          staging_dir = pathlib.Path("media-staging")
+          staged = staging_dir / f"{filename}.b64"
+          if staged.exists():
+              encoded = staged.read_text(encoding="utf-8")
+          else:
+              parts = sorted(staging_dir.glob(f"{filename}.b64.part*"))
+              if not parts:
+                  raise SystemExit(f"Missing staged media payload for {filename}")
+              encoded = "".join(part.read_text(encoding="utf-8") for part in parts)
 
-          data = base64.b64decode(staged.read_text(encoding="utf-8"), validate=True)
+          data = base64.b64decode(encoded, validate=True)
           if not data.startswith(b"\xff\xd8"):
               raise SystemExit("Staged media did not decode to a JPEG")
           if len(data) > 8 * 1024 * 1024:
