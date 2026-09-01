@@ -5,7 +5,7 @@ on:
     types: [labeled]
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 concurrency:
@@ -18,7 +18,7 @@ jobs:
       github.event.label.name == 'approved-to-publish' &&
       github.event.issue.user.login == github.repository_owner
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     env:
       APPROVAL_PAYLOAD: ${{ github.event.issue.body }}
       INSTAGRAM_USER_ID: ${{ vars.INSTAGRAM_USER_ID }}
@@ -29,85 +29,6 @@ jobs:
     steps:
       - name: Check out publisher
         uses: actions/checkout@v4
-
-      - name: Materialize staged image when needed
-        run: |
-          python3 - <<'PY'
-          import base64, json, os, pathlib, urllib.parse
-
-          payload = json.loads(os.environ["APPROVAL_PAYLOAD"])
-          image_url = payload.get("image_url", "")
-          parsed = urllib.parse.urlsplit(image_url)
-          expected_host = "raw.githubusercontent.com"
-          expected_prefix = "/shoop96-png/austin-housing-instagram-publisher/main/media/"
-
-          if parsed.hostname != expected_host or not parsed.path.startswith(expected_prefix):
-              print("Image is externally hosted; no staged media materialization needed.")
-              raise SystemExit(0)
-
-          filename = pathlib.PurePosixPath(parsed.path).name
-          if not filename.lower().endswith(".jpg"):
-              raise SystemExit("Staged media target must be a .jpg file")
-
-          target = pathlib.Path("media") / filename
-          if target.exists():
-              print(f"Media already present: {target}")
-              raise SystemExit(0)
-
-          staging_dir = pathlib.Path("media-staging")
-          staged = staging_dir / f"{filename}.b64"
-          if staged.exists():
-              encoded = staged.read_text(encoding="utf-8")
-          else:
-              parts = sorted(staging_dir.glob(f"{filename}.b64.part*"))
-              if not parts:
-                  raise SystemExit(f"Missing staged media payload for {filename}")
-              encoded = "".join(part.read_text(encoding="utf-8") for part in parts)
-
-          encoded = "".join(encoded.split())
-          data = base64.b64decode(encoded, validate=True)
-          if not data.startswith(b"\xff\xd8"):
-              raise SystemExit("Staged media did not decode to a JPEG")
-          if len(data) > 8 * 1024 * 1024:
-              raise SystemExit("Staged JPEG exceeds 8 MB")
-
-          target.parent.mkdir(parents=True, exist_ok=True)
-          target.write_bytes(data)
-          print(f"Materialized {target} ({len(data):,} bytes)")
-          PY
-
-      - name: Normalize repository JPEG for Instagram
-        run: |
-          python3 - <<'PY' > /tmp/instagram_target
-          import json, os, pathlib, urllib.parse
-          payload = json.loads(os.environ["APPROVAL_PAYLOAD"])
-          parsed = urllib.parse.urlsplit(payload.get("image_url", ""))
-          prefix = "/shoop96-png/austin-housing-instagram-publisher/main/media/"
-          if parsed.hostname == "raw.githubusercontent.com" and parsed.path.startswith(prefix):
-              print(pathlib.Path("media") / pathlib.PurePosixPath(parsed.path).name)
-          PY
-          target="$(cat /tmp/instagram_target)"
-          if [ -n "$target" ] && [ -f "$target" ]; then
-            if command -v convert >/dev/null 2>&1; then
-              tmp="${target%.jpg}.normalized.jpg"
-              convert "$target" -colorspace sRGB -interlace none -sampling-factor 4:2:0 -quality 88 "$tmp"
-              mv "$tmp" "$target"
-              echo "Normalized $target for Instagram"
-            else
-              echo "ImageMagick not present; leaving JPEG unchanged"
-            fi
-          fi
-
-      - name: Publish reconstructed media to repository
-        run: |
-          if git status --porcelain -- media/ | grep -q .; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add media/
-            git commit -m "Prepare approved Instagram media for issue #$ISSUE_NUMBER"
-            git push origin HEAD:main
-            sleep 8
-          fi
 
       - name: Validate and publish
         id: publisher
