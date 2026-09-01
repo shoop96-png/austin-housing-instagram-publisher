@@ -64,8 +64,6 @@ jobs:
                   raise SystemExit(f"Missing staged media payload for {filename}")
               encoded = "".join(part.read_text(encoding="utf-8") for part in parts)
 
-          # GitHub text files may contain line wrapping/newlines. Remove whitespace
-          # before strict validation so a valid wrapped Base64 payload decodes cleanly.
           encoded = "".join(encoded.split())
           data = base64.b64decode(encoded, validate=True)
           if not data.startswith(b"\xff\xd8"):
@@ -78,15 +76,37 @@ jobs:
           print(f"Materialized {target} ({len(data):,} bytes)")
           PY
 
+      - name: Normalize repository JPEG for Instagram
+        run: |
+          python3 - <<'PY' > /tmp/instagram_target
+          import json, os, pathlib, urllib.parse
+          payload = json.loads(os.environ["APPROVAL_PAYLOAD"])
+          parsed = urllib.parse.urlsplit(payload.get("image_url", ""))
+          prefix = "/shoop96-png/austin-housing-instagram-publisher/main/media/"
+          if parsed.hostname == "raw.githubusercontent.com" and parsed.path.startswith(prefix):
+              print(pathlib.Path("media") / pathlib.PurePosixPath(parsed.path).name)
+          PY
+          target="$(cat /tmp/instagram_target)"
+          if [ -n "$target" ] && [ -f "$target" ]; then
+            if command -v convert >/dev/null 2>&1; then
+              tmp="${target%.jpg}.normalized.jpg"
+              convert "$target" -colorspace sRGB -interlace none -sampling-factor 4:2:0 -quality 88 "$tmp"
+              mv "$tmp" "$target"
+              echo "Normalized $target for Instagram"
+            else
+              echo "ImageMagick not present; leaving JPEG unchanged"
+            fi
+          fi
+
       - name: Publish reconstructed media to repository
         run: |
           if git status --porcelain -- media/ | grep -q .; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add media/
-            git commit -m "Materialize approved Instagram media for issue #$ISSUE_NUMBER"
+            git commit -m "Prepare approved Instagram media for issue #$ISSUE_NUMBER"
             git push origin HEAD:main
-            sleep 5
+            sleep 8
           fi
 
       - name: Validate and publish
