@@ -1,0 +1,16 @@
+{
+  "status": "awaiting_approval",
+  "headline": "SCHOOL SITE. NEW HOUSING?",
+  "publish_payload": {
+    "schema": 1,
+    "approval_id": "ahb-2026-10-08-rosedale",
+    "caption": "A former Austin school site could become 435 apartments.\n\nOn September 24, Austin City Council approved rezoning the former Rosedale school property at West 49th Street and Rosedale Avenue for multifamily housing.\n\nCity planning documents describe approximately 435 apartments on the 4.62-acre site near Burnet Road. AISD has a sale contract with developer OHT Partners.\n\nThe zoning vote clears one step, but it does not mean construction is underway. AISD says a legal proceeding is needed to clarify a restrictive covenant dating to 1938 before the sale can be finalized.\n\nWhy it matters locally: Reusing surplus school property could add housing in an established Central Austin neighborhood. Whether these particular homes move forward—and when—still depends on resolving the remaining legal and development requirements.\n\nThese are proposed apartments, not completed homes or units available to rent today.\n\nSources: City of Austin, September 24 council action and planning report; Austin ISD’s Rosedale property update. New coverage: Focal, October 7, 2026.\nhttps://www.austintexas.gov/council/2026/20260924-reg\nhttps://www.austinisd.org/repurposing/rosedale\n\n#AustinHousing #AustinRealEstate #RosedaleAustin #CentralAustin #HousingSupply #AustinDevelopment #AustinRenters #AustinHousingBrief",
+    "credit_line": "Original editorial graphic: Austin Housing Brief.",
+    "image_url": "https://raw.githubusercontent.com/shoop96-png/austin-housing-instagram-publisher/main/media/2026-10-08-austin-rosedale-housing.jpg",
+    "source_url": "https://www.austintexas.gov/council/2026/20260924-reg",
+    "dry_run": false
+  },
+  "reuse_basis": "Original editorial graphic created for Austin Housing Brief with built-in image generation; no third-party imagery, logos, buildings or documentary scenes.",
+  "source_report": "https://services.austintexas.gov/edims/document.cfm?id=481426",
+  "additional_source": "https://www.austinisd.org/repurposing/rosedale"
+}
