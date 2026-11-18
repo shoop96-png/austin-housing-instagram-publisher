@@ -1,0 +1,30 @@
+from PIL import Image,ImageDraw,ImageFont
+S=2
+im=Image.new('RGB',(1080*S,1350*S),'#F1E9D9');d=ImageDraw.Draw(im)
+bold='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+reg='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+ink='#173D35';orange='#D74926';cream='#F1E9D9';green='#D2DCA8'
+def text(x,y,t,size,c=ink,b=False):d.text((x*S,y*S),t,font=ImageFont.truetype(bold if b else reg,size*S),fill=c,anchor='lt')
+def box(a,c):d.rectangle(tuple(v*S for v in a),fill=c)
+text(60,52,'AUSTIN HOUSING BRIEF',25,b=True)
+text(60,106,'CONSTRUCTION PIPELINE / NOV 18, 2026',19)
+box((60,151,1020,154),ink)
+text(55,198,'FEWER UNITS',87,b=True)
+text(55,302,'AUTHORIZED.',87,b=True)
+text(60,433,'18,284',150,orange,True)
+text(66,614,'HOUSING UNITS • JAN–SEP 2026',26,b=True)
+text(66,664,'Austin metro • Down 10.3% from Jan–Sep 2025',23)
+box((60,751,522,1099),ink);box((548,751,1020,1099),green)
+text(88,787,'SINGLE-FAMILY',25,cream,True)
+text(88,829,'1-unit structures',20,cream)
+text(83,903,'11,789',64,cream,True)
+text(88,1008,'DOWN 1.1%',30,cream,True)
+text(576,787,'MULTIFAMILY',25,ink,True)
+text(576,829,'2+ units per structure',20,ink)
+text(571,903,'6,495',64,ink,True)
+text(576,1008,'DOWN 23.1%',30,ink,True)
+text(60,1142,'Authorizations measure the pipeline, not completed homes.',22)
+text(60,1202,'Source: U.S. Census Bureau, Building Permits Survey.',19)
+text(60,1238,'Austin–Round Rock–San Marcos MSA • Unadjusted units',18)
+text(60,1274,'Jan–Sep 2025 vs Jan–Sep 2026 • Original data graphic',18)
+im.resize((1080,1350),Image.Resampling.LANCZOS).save('/workspace/scratch/6c44a6b800a0/housing18.jpg',quality=94,optimize=True)

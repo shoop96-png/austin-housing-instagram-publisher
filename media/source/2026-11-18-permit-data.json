@@ -1,0 +1,21 @@
+{
+  "geography": "Austin-Round Rock-San Marcos TX MSA",
+  "cbsa": 12420,
+  "period": "January–September",
+  "source2026": "https://www.census.gov/construction/bps/xls/cbsamonthly_202609.xls",
+  "source2025": "https://www.census.gov/construction/bps/xls/cbsamonthly_202509.xls",
+  "units2026": {
+    "total": 18284,
+    "single": 11789,
+    "two": 250,
+    "threeFour": 143,
+    "fivePlus": 6102
+  },
+  "units2025": {
+    "total": 20374,
+    "single": 11924,
+    "two": 616,
+    "threeFour": 76,
+    "fivePlus": 7758
+  }
+}

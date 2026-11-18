@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "approval_id": "wade-2026-11-18-austin-permit-mix",
+  "caption": "Austin’s housing-permit pullback is mostly multifamily.\n\nThe Austin–Round Rock–San Marcos metro authorized 18,284 privately owned housing units from January through September 2026, down 10.3% from 20,374 in the same months of 2025.\n\nThe split matters:\n• Single-family: 11,789 units, down 1.1% from 11,924.\n• Multifamily: 6,495 units, down 23.1% from 8,450.\n\nMultifamily here includes structures with two or more units. It accounts for 1,955 of the 2,090 fewer housing units authorized—a calculation from the Census tables.\n\nWhy it matters locally: the slowdown in this early measure of future housing supply is much sharper in multifamily than in single-family. Permits measure authorizations; construction starts, completions and future prices require separate evidence.\n\nOpportunity Austin highlighted the overall decline in its November 12 economic update. We checked the underlying Census files directly.\n\nSources: U.S. Census Bureau, September 2026 and September 2025 Building Permits Survey CBSA tables; Opportunity Austin, November 12, 2026.\nhttps://www.census.gov/construction/bps/msamonthly.html\nhttps://opportunityaustin.com/austin-monthly-economic-indicators-november-2026/\n\n#AustinHousingBrief #AustinHousing #HousingSupply #AustinConstruction #HousingData #SingleFamilyHousing #MultifamilyHousing #CentralTexas",
+  "credit_line": "Original data graphic: Austin Housing Brief. Data: U.S. Census Bureau Building Permits Survey; multifamily totals and percentage changes calculated from published tables. Created in-house; no third-party imagery.",
+  "image_url": "https://raw.githubusercontent.com/shoop96-png/austin-housing-instagram-publisher/main/media/2026-11-18-austin-permit-mix.jpg",
+  "source_url": "https://www.census.gov/construction/bps/msamonthly.html",
+  "dry_run": false
+}
