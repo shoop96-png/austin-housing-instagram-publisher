@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-11-19",
+  "source_url": "https://communityimpact.com/central-austin/real-estate/data-central-austin-homes-spent-less-days-on-market-in-october-year-over-year/",
+  "published_at": "2026-11-17 15:02 America/Chicago",
+  "author": "Elle Bent",
+  "source_access": "Downloaded public original article over HTTPS; verified article text directly.",
+  "scope": "Community Impact's nine-ZIP Central Austin coverage area",
+  "data_source": "Unlock MLS",
+  "facts": {
+    "average_days_oct2026": 62,
+    "average_days_oct2025": 78,
+    "median_price_oct2026": 825000,
+    "median_price_oct2025": 894000,
+    "closed_sales_oct2026": 146,
+    "closed_sales_yoy_pct": -17.5
+  },
+  "image": {
+    "url": "https://raw.githubusercontent.com/shoop96-png/austin-housing-instagram-publisher/main/media/2026-11-19-central-austin-october.jpg",
+    "format": "JPEG",
+    "width": 1080,
+    "height": 1350,
+    "bytes": 263303,
+    "reuse_basis": "Original in-house typography/data graphic; no third-party imagery.",
+    "credit_line": "Original data graphic: Austin Housing Brief. Data: Unlock MLS via Community Impact, Nov. 17, 2026. Created in-house; no third-party imagery."
+  },
+  "status": "Awaiting Wade approval; do not publish until explicit approval"
+}
